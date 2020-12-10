@@ -15,7 +15,19 @@ public class Heuristics {
 	}
 	
 	public double evalMobility(int[][] board , int player) {
-		return 0;
+		int oplayer = (player == 1) ? -1 : 1;
+
+//        int myMoveCount = BoardHelper.getAllPossibleMoves(board,player).size();
+//        int opMoveCount = BoardHelper.getAllPossibleMoves(board,oplayer).size();
+		
+		int myValue = 0;
+		int opValue = 0;
+		
+		if (myValue + opValue != 0) {
+			return 100.0 * (myValue - myValue) / (myValue + myValue);
+		} else {
+			return 0;
+		}
 	}
 	
 	public double evalCornerCaptured(int[][] board , int player) {
@@ -41,12 +53,40 @@ public class Heuristics {
         }
 	}
 	
-	public double evalStability() {
-		return 0;
-	}
+//	public double evalStability() {
+//		return 0;
+//	}
 	
 	public double evalStaticWeights(int[][] board , int player) {
-		return 0;
+		int[][] w = {
+						{100, -20, 10,  5,  5, 10, -20, 100},
+						{-20, -50, -2, -2, -2, -2, -50, -20},
+						{ 10,  -2, -1, -1, -1, -1,  -2,  10},
+						{  5,  -2, -1, -1, -1, -1,  -2,   5},
+						{  5,  -2, -1, -1, -1, -1,  -2,   5},
+						{ 10,  -2, -1, -1, -1, -1,  -2,  10},
+						{-20, -50, -2, -2, -2, -2, -50, -20},
+						{100, -20, 10,  5,  5, 10, -20, 100}
+		};
+		
+		int oplayer = (player == 1) ? -1 : 1;
+		
+		int myWeight = 0;
+		int opWeight = 0;
+		
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (board[i][j] == player) {
+					myWeight += board[i][j];
+				}
+				
+				if (board[i][j] == oplayer) {
+					opWeight += board[i][j];
+				}
+			}
+		}
+		
+		return myWeight - opWeight;
 	}	
 	
 }

@@ -2,6 +2,6 @@ package evaluators;
 
 public interface Evaluator {
 	
-	int evaluate(int[][] board,int player);
+	public double evaluate(int[][] board,int player);
 
 }
