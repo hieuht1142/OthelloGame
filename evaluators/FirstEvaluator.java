@@ -1,13 +1,12 @@
 package evaluators;
 
-
 public class FirstEvaluator extends Heuristics implements Evaluator {
 	
 	@Override
 	public double evaluate(int[][] board, int player) {
-//		if(BoardHelper.isGameFinished(board)){
-//            return 1000*evalDiscDiff(board, player);
-//        }
+		if (gameManager.isGameFinished(board)) {
+			return evalDiscParity(board, player);
+		}
 		
 		switch (getGamePhase(board)) {
 			case END:
@@ -17,13 +16,9 @@ public class FirstEvaluator extends Heuristics implements Evaluator {
 		}
 	}
 	
-	private Phase getGamePhase(int[][] board) {
-//        int sc = BoardHelper.getTotalStoneCount(board);
-//        if(sc<20) return GamePhase.EARLY_GAME;
-//        else if(sc<=58) return GamePhase.MID_GAME;
-//        else return GamePhase.LATE_GAME;		
-		
-		int numDisc = 0;
+	private Phase getGamePhase(int[][] board) {			
+
+		int numDisc = boardManager.getTotalDiscNum(board);
 		if (numDisc <= 20) {
 			return Phase.BEGIN;
 		} else if (numDisc <= 50) {
